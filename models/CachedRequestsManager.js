@@ -1,11 +1,16 @@
 import * as utilities from "../utilities.js";
 import * as serverVariables from "../serverVariables.js";
 import {log} from "../log.js";
+import path from 'path';
 let repositoryCachesExpirationTime = serverVariables.get("main.repository.CacheExpirationTime");
 
 globalThis.CachedRequestUrls = [];
 
 export default class CachedRequestsManager{
+    cconstructor(HttpContext) {
+        super(HttpContext);
+        this.params = HttpContext.path.params;
+    }
     static add(url,content,Etag="") {
         if (url != "") {
             CachedRequestUrls.push({
@@ -64,14 +69,11 @@ export default class CachedRequestsManager{
             query = httpcontext.path.queryString!=""
             if(query!="")
             {
-                for(let cache of CachedRequestUrls)
+                cache = this.find(query)
+                if(cache != null)
                 {
-                    if(cache.url = query)
-                    {
-                        HttpContext.response.JSON( cache.content, cache.ETag, true)
-                    }
+                    return this.HttpContext.response.JSON( cache.content, cache.ETag, true /* from cache */)
                 }
-                HttpContext.response.JSON("Url does not exist")
             }
         }
         return null;
