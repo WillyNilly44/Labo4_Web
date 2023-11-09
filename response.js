@@ -47,7 +47,9 @@ export default class Response {
             let content = JSON.stringify(jsonObj);
             if(fromCache)
             {
-                let apitType = utilities.decomposePath()
+                let url  = this.HttpContext.req.url;
+                let apitType = utilities.decomposePath(url)
+                //add inside apitype.isApi and apitType.id is null or not
                 CachedRequestsManager.add()
             } 
             return this.end(content);
