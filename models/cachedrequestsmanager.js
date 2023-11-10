@@ -71,7 +71,6 @@ export default class CachedRequestsManager {
             HttpContext.response.JSON(content,ETag, true);
             return true;
         }
-        HttpContext.response.JSON(content,ETag,false);
         return false
 
 

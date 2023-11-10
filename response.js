@@ -4,8 +4,8 @@
 // Author : Nicolas Chourot
 // Lionel-Groulx College
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-import CachedRequestsManager from "./models/cachedrequestsmanager.js";
-import * as utilities from "../utilities.js";
+import CachedRequestsManager from "./models/CachedRequestsManager.js";
+import * as utilities from "./utilities.js";
 export default class Response {
     constructor(HttpContext) {
         this.HttpContext = HttpContext;
@@ -45,12 +45,14 @@ export default class Response {
             this.res.writeHead(200, { 'content-type': 'application/json' });
         if (jsonObj != null) {
             let content = JSON.stringify(jsonObj);
-            if(fromCache)
+            if(!fromCache)
             {
                 let url  = this.HttpContext.req.url;
-                let apitType = utilities.decomposePath(url)
-                //add inside apitype.isApi and apitType.id is null or not
-                CachedRequestsManager.add()
+                let apitType = utilities.decomposePath(url);
+                if(apitType.isApi && apitType.id == undefined)
+                {
+                    CachedRequestsManager.add(url,content,ETag)
+                }
             } 
             return this.end(content);
         } else
