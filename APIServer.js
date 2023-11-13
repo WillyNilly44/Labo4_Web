@@ -42,7 +42,7 @@ export default class APIServer {
         log(FgGreen, "************************************");
         log(FgGreen, "* API SERVER - version beta - 1.92 *");
         log(FgGreen, "************************************");
-        log(FgGreen, "* Author: Nicolas Chourot          *");
+        log(FgGreen, "* Author: William Sauvé            *");
         log(FgGreen, "* Lionel-Groulx College            *");
         log(FgGreen, "* Release date: october 2023       *");
         log(FgGreen, "************************************");
