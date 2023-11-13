@@ -28,7 +28,7 @@ export default class CachedRequestsManager {
                     if (cache.url == url) {
                         cache.Expire_Time = utilities.nowInSeconds() + cachedRequestsExpirationTime;
                         console.log("Url " + url + " has been retreived.")
-                        return cache.content;
+                        return cache;
                     }
                 }
             }
@@ -56,7 +56,7 @@ export default class CachedRequestsManager {
         let now = utilities.nowInSeconds();
         for (let cache of cachedRequests) {
             if (cache.Expire_Time < now) {
-                console.log("Cached request " + url + "expired");
+                console.log("Cached request " + cache.url + "expired");
                 indexToDelete.push(index);
             }
             index++;
@@ -68,7 +68,7 @@ export default class CachedRequestsManager {
         let cached = CachedRequestsManager.find(HttpContext.req.url);
         if(cached != null && HttpContext.req.method == "GET" )
         {
-            HttpContext.response.JSON(content,ETag, true);
+            HttpContext.response.JSON(JSON.parse(cached.content),cached.ETag, true);
             return true;
         }
         return false

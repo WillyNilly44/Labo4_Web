@@ -49,7 +49,7 @@ export default class Response {
             {
                 let url  = this.HttpContext.req.url;
                 let apitType = utilities.decomposePath(url);
-                if(apitType.isApi && apitType.id == undefined)
+                if(apitType.isAPI && apitType.id == undefined)
                 {
                     CachedRequestsManager.add(url,content,ETag)
                 }
